@@ -1,33 +1,42 @@
 <html>
-    <style>@import url('https://fonts.googleapis.com/css?family=Inconsolata');</style>
-    <script src="https://cdn.jsdelivr.net/npm/@svgdotjs/svg.js@3.0.9/dist/svg.js"></script>
-    <script src="https://unpkg.com/papaparse@latest/papaparse.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/numeral.js/2.0.6/numeral.min.js"></script>
-<body>
-<div id="drawing"></div>
-</body>
-    <script>
-      cosmosData = JSON.parse('[{"Date":"2019-03-01T00:00:00.000Z","Volume":4412826.1846780293},{"Date":"2019-04-01T00:00:00.000Z","Volume":18809031.398603417},{"Date":"2019-05-01T00:00:00.000Z","Volume":82620860.9577406496},{"Date":"2019-06-01T00:00:00.000Z","Volume":82822296.4726664424},{"Date":"2019-07-01T00:00:00.000Z","Volume":132754435.8421994299},{"Date":"2019-08-01T00:00:00.000Z","Volume":117351009.9099126458},{"Date":"2019-09-01T00:00:00.000Z","Volume":153211835.2150003314},{"Date":"2019-10-01T00:00:00.000Z","Volume":144312812.6855894327},{"Date":"2019-11-01T00:00:00.000Z","Volume":162746338.1965291798},{"Date":"2019-12-01T00:00:00.000Z","Volume":168645150.8708860576},{"Date":"2020-01-01T00:00:00.000Z","Volume":164411479.5319985747},{"Date":"2020-02-01T00:00:00.000Z","Volume":305057400.651879549},{"Date":"2020-03-01T00:00:00.000Z","Volume":190315217.6627751887},{"Date":"2020-04-01T00:00:00.000Z","Volume":166590900.9078622758},{"Date":"2020-05-01T00:00:00.000Z","Volume":160574580.0365058184},{"Date":"2020-06-01T00:00:00.000Z","Volume":113359048.2794652432},{"Date":"2020-07-01T00:00:00.000Z","Volume":138241474.3887446821},{"Date":"2020-08-01T00:00:00.000Z","Volume":302486147.642167449},{"Date":"2020-09-01T00:00:00.000Z","Volume":320619555.1136446595},{"Date":"2020-10-01T00:00:00.000Z","Volume":293154128.0264361501},{"Date":"2020-11-01T00:00:00.000Z","Volume":251061971.8679554164},{"Date":"2020-12-01T00:00:00.000Z","Volume":239025992.3988381028},{"Date":"2021-01-01T00:00:00.000Z","Volume":724698540.7026003599},{"Date":"2021-02-01T00:00:00.000Z","Volume":1398199379.167142868},{"Date":"2021-03-01T00:00:00.000Z","Volume":612116826.6190322638},{"Date":"2021-04-01T00:00:00.000Z","Volume":798008448.9613333941},{"Date":"2021-05-01T00:00:00.000Z","Volume":769838070.6567741632},{"Date":"2021-06-01T00:00:00.000Z","Volume":249748971.7960000038},{"Date":"2021-07-01T00:00:00.000Z","Volume":228468403.4283333123}]')     
-      cosmosData.sort((a, b) => a.Date > b.Date ? 1 : -1)
-var max = cosmosData.map(v => v.Volume).reduce((p, c)=> Math.max(p,c), 0) * 2
+  <style>
+    @import url("https://fonts.googleapis.com/css?family=Inconsolata");
+  </style>
+  <script src="https://cdn.jsdelivr.net/npm/@svgdotjs/svg.js@3.0.9/dist/svg.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/numeral.js/2.0.6/numeral.min.js"></script>
+  <body>
+    <div id="drawing"></div>
+  </body>
+  <script>
+    cosmosData = JSON.parse(
+      '[{"Date":"2019-03-01T00:00:00.000Z","Volume":4412826.1846780293},{"Date":"2019-04-01T00:00:00.000Z","Volume":18809031.398603417},{"Date":"2019-05-01T00:00:00.000Z","Volume":82620860.9577406496},{"Date":"2019-06-01T00:00:00.000Z","Volume":82822296.4726664424},{"Date":"2019-07-01T00:00:00.000Z","Volume":132754435.8421994299},{"Date":"2019-08-01T00:00:00.000Z","Volume":117351009.9099126458},{"Date":"2019-09-01T00:00:00.000Z","Volume":153211835.2150003314},{"Date":"2019-10-01T00:00:00.000Z","Volume":144312812.6855894327},{"Date":"2019-11-01T00:00:00.000Z","Volume":162746338.1965291798},{"Date":"2019-12-01T00:00:00.000Z","Volume":168645150.8708860576},{"Date":"2020-01-01T00:00:00.000Z","Volume":164411479.5319985747},{"Date":"2020-02-01T00:00:00.000Z","Volume":305057400.651879549},{"Date":"2020-03-01T00:00:00.000Z","Volume":190315217.6627751887},{"Date":"2020-04-01T00:00:00.000Z","Volume":166590900.9078622758},{"Date":"2020-05-01T00:00:00.000Z","Volume":160574580.0365058184},{"Date":"2020-06-01T00:00:00.000Z","Volume":113359048.2794652432},{"Date":"2020-07-01T00:00:00.000Z","Volume":138241474.3887446821},{"Date":"2020-08-01T00:00:00.000Z","Volume":302486147.642167449},{"Date":"2020-09-01T00:00:00.000Z","Volume":320619555.1136446595},{"Date":"2020-10-01T00:00:00.000Z","Volume":293154128.0264361501},{"Date":"2020-11-01T00:00:00.000Z","Volume":251061971.8679554164},{"Date":"2020-12-01T00:00:00.000Z","Volume":239025992.3988381028},{"Date":"2021-01-01T00:00:00.000Z","Volume":724698540.7026003599},{"Date":"2021-02-01T00:00:00.000Z","Volume":1398199379.167142868},{"Date":"2021-03-01T00:00:00.000Z","Volume":612116826.6190322638},{"Date":"2021-04-01T00:00:00.000Z","Volume":798008448.9613333941},{"Date":"2021-05-01T00:00:00.000Z","Volume":769838070.6567741632},{"Date":"2021-06-01T00:00:00.000Z","Volume":249748971.7960000038},{"Date":"2021-07-01T00:00:00.000Z","Volume":228468403.4283333123}]'
+    );
+    cosmosData.sort((a, b) => (a.Date > b.Date ? 1 : -1));
+    var max =
+      cosmosData.map((v) => v.Volume).reduce((p, c) => Math.max(p, c), 0) * 2;
 
-var draw = SVG().addTo('body').size('100%', cosmosData.length * 30)
+    var draw = SVG()
+      .addTo("body")
+      .size("100%", cosmosData.length * 30);
 
-for (var i = 0; i < cosmosData.length; i++) {
-  bar(cosmosData[i].Date, cosmosData[i].Volume, i*20)
-}
-function bar(date, value, y) {
-  var width = new SVG.Number(value).divide(max).convert('%')
-  draw.rect(width, 15).y(y).fill('#ff0066')
-  draw.text(function(add) {
-      add.tspan(numeral(Math.floor(value * 100) / 100).format('0a'))
-      add.tspan(new Date(date).toLocaleDateString("en-US")).dx(5).fill('#999').attr('font-size', '1em')
-    })
-    .move(width.plus('1%'), y - 1)
-    .font({ family: 'Inconsolata', size: '1em'})
-    .fill('#666')
-}
-
-    </script>
-
+    for (var i = 0; i < cosmosData.length; i++) {
+      bar(cosmosData[i].Date, cosmosData[i].Volume, i * 20);
+    }
+    function bar(date, value, y) {
+      var width = new SVG.Number(value).divide(max).convert("%");
+      draw.rect(width, 15).y(y).fill("#ff0066");
+      draw
+        .text(function (add) {
+          add.tspan(numeral(Math.floor(value * 100) / 100).format("0a"));
+          add
+            .tspan(new Date(date).toLocaleDateString("en-US"))
+            .dx(5)
+            .fill("#999")
+            .attr("font-size", "1em");
+        })
+        .move(width.plus("1%"), y - 1)
+        .font({ family: "Inconsolata", size: "1em" })
+        .fill("#666");
+    }
+  </script>
 </html>
