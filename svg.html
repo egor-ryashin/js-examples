@@ -19,8 +19,9 @@
       .addTo("body")
       .size("100%", cosmosData.length * 30);
 
+    draw.text('Cosmos Volume monthly').font({ family: 'Inconsolata', size: '1.2em' }).fill('#666')
     for (var i = 0; i < cosmosData.length; i++) {
-      bar(cosmosData[i].Date, cosmosData[i].Volume, i * 20);
+      bar(cosmosData[i].Date, cosmosData[i].Volume, i * 20 + 40);
     }
     function bar(date, value, y) {
       var width = new SVG.Number(value).divide(max).convert("%");

@@ -1,0 +1,60 @@
+<html>
+  <style>
+    body {
+      width: 100vw;
+      height: 100vh;
+      margin: 0;
+    }
+  </style>
+  <body>
+    <canvas id="canvas"></canvas>
+  </body>
+  <script>
+    const canvas = document.querySelector("canvas");
+    const c = canvas.getContext("2d");
+    console.log(c);
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    console.log(canvas.width + " " + canvas.height);
+    let count = 1000;
+    let v = [];
+    class Line {
+      constructor() {
+        this.x = Math.random() * canvas.width;
+        this.y = Math.random() * canvas.height;
+        this.width = this.x + 100;
+        this.height = this.y + 200;
+        this.color = "red";
+        this.frames = 10;
+        this.tFrames = 10;
+      }
+    }
+    for (let i = 0; i < count; i++) {
+      v.push(new Line());
+    }
+    var prev = 0;
+    let step = 10;
+    function animate() {
+      requestAnimationFrame(animate);
+      render();
+      render();
+    }
+    function render() {
+      let next = (prev + 1) % count;
+      let next2 = (prev + 90) % count;
+      draw(next, "blue");
+      draw(next2, "white");
+      prev = next;
+    }
+    function draw(next, color) {
+      c.beginPath();
+      c.strokeStyle = color;
+      c.lineWidth = 1;
+      c.moveTo(v[next].x, v[next].y);
+      c.lineTo(v[next].width, v[next].height);
+      c.stroke();
+      c.closePath();
+    }
+    animate();
+  </script>
+</html>
