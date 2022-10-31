@@ -1,0 +1,76 @@
+<html>
+  <head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r99/three.min.js"></script>
+  </head>
+  <style>
+    body {
+      width: 100vw;
+      height: 100vh;
+      margin: 0;
+    }
+  </style>
+  <body></body>
+  <script>
+    function getRandom(max) {
+      return Math.random() * max;
+    }
+
+    function line(scene) {
+      const points = [];
+
+      let x = getRandom(8);
+      let y = getRandom(8); 
+      let z = getRandom(8); 
+
+      const geometry = new THREE.CylinderGeometry( .02, .02, 1, 20 );
+      var material = new THREE.MeshPhongMaterial();
+      const cylinder = new THREE.Mesh( geometry, material );
+      cylinder.position.x = x - 4;
+      cylinder.position.z = z - 4;
+
+      scene.add(cylinder);
+    }
+    var scene = new THREE.Scene();
+
+    for (let i = 0; i < 1000; i++) {
+      line(scene);
+    }
+
+    var spotLight = new THREE.SpotLight(0xffffff);
+    spotLight.position.set(5, 5, 5);
+    scene.add(spotLight);
+
+    spotLight = new THREE.SpotLight(0xffffff);
+    spotLight.position.set(-5, 5, 5);
+    scene.add(spotLight);
+
+    var camera = new THREE.PerspectiveCamera(
+      75,
+      window.innerWidth / window.innerHeight,
+      0.1,
+      1000
+    );
+    var renderer = new THREE.WebGLRenderer();
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    document.body.appendChild(renderer.domElement);
+
+    camera.position.z = 5;
+    camera.position.y = 3;
+    camera.rotation.x = (-45 * Math.PI) / 180;
+
+    var originX = 0.0;
+    var originZ = 0.0;
+    var angle = 0.0;
+    function updatePosition() {
+      angle += 0.01;
+    }
+    setInterval(updatePosition, 10);
+
+    function render() {
+      // requestAnimationFrame(render);
+      renderer.render(scene, camera);
+    }
+
+    render();
+  </script>
+</html>
