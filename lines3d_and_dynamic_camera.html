@@ -1,6 +1,7 @@
 <html>
   <head>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r99/three.min.js"></script>
+    <script src="https://unpkg.com/tween.js@16.6.0/src/Tween.js"></script>
   </head>
   <style>
     body {
@@ -11,6 +12,12 @@
   </style>
   <body></body>
   <script>
+    const positions = [
+      [-5, 3, 5],
+      [5, 3, 5],
+      [5, 3, -5],
+      [-5, 3, -5],
+    ];
     function getRandom(max) {
       return Math.random() * max;
     }
@@ -19,12 +26,12 @@
       const points = [];
 
       let x = getRandom(8);
-      let y = getRandom(8); 
-      let z = getRandom(8); 
+      let y = getRandom(8);
+      let z = getRandom(8);
 
-      const geometry = new THREE.CylinderGeometry( .02, .02, 1, 20 );
+      const geometry = new THREE.CylinderGeometry(0.02, 0.02, 1, 20);
       var material = new THREE.MeshPhongMaterial();
-      const cylinder = new THREE.Mesh( geometry, material );
+      const cylinder = new THREE.Mesh(geometry, material);
       cylinder.position.x = x - 4;
       cylinder.position.z = z - 4;
 
@@ -54,16 +61,41 @@
     renderer.setSize(window.innerWidth, window.innerHeight);
     document.body.appendChild(renderer.domElement);
 
-    camera.position.z = 5;
-    camera.position.y = 3;
-    camera.rotation.x = (-45 * Math.PI) / 180;
+    camera.position.set(...positions[0]);
+    camera.lookAt(scene.position);
+    // camera.rotation.x = (-45 * Math.PI) / 180;
 
     var originX = 0.0;
     var originZ = 0.0;
 
-    function render() {
-      // requestAnimationFrame(render);
+    let currPosition = 0;
+    function interval() {
+      currPosition = ++currPosition % positions.length;
+      tweenCamera(camera, positions[currPosition], 3000);
+    }
+    interval();
+    setInterval(interval, 4000);
+
+    function animate() {
+      requestAnimationFrame(animate);
+      TWEEN.update();
+      camera.lookAt(scene.position);
       renderer.render(scene, camera);
+    }
+    animate();
+
+    function tweenCamera(camera, position, duration) {
+      new TWEEN.Tween(camera.position)
+        .to(
+          {
+            x: position[0],
+            y: position[1],
+            z: position[2],
+          },
+          duration
+        )
+        .easing(TWEEN.Easing.Quadratic.InOut)
+        .start();
     }
 
     render();
